@@ -21,7 +21,7 @@ public class Charges implements java.io.Serializable {
 
 	private Integer idCharges;
 	private Propriete propriete;
-	private String denominationCharge;
+	private String nomCharges;
 	private Integer montantCharge;
 	private ChargesTemporaire chargesTemporaire;
 	private ChargesFixe chargesFixe;
@@ -36,7 +36,7 @@ public class Charges implements java.io.Serializable {
 	public Charges(Propriete propriete, String denominationCharge, Integer montantCharge,
 			ChargesTemporaire chargesTemporaire, ChargesFixe chargesFixe) {
 		this.propriete = propriete;
-		this.denominationCharge = denominationCharge;
+		this.nomCharges = denominationCharge;
 		this.montantCharge = montantCharge;
 		this.chargesTemporaire = chargesTemporaire;
 		this.chargesFixe = chargesFixe;
@@ -64,15 +64,6 @@ public class Charges implements java.io.Serializable {
 		this.propriete = propriete;
 	}
 
-	@Column(name = "denomination_Charge", length = 254)
-	public String getDenominationCharge() {
-		return this.denominationCharge;
-	}
-
-	public void setDenominationCharge(String denominationCharge) {
-		this.denominationCharge = denominationCharge;
-	}
-
 	@Column(name = "montant_Charge", precision = 8, scale = 0)
 	public Integer getMontantCharge() {
 		return this.montantCharge;
@@ -98,6 +89,15 @@ public class Charges implements java.io.Serializable {
 
 	public void setChargesFixe(ChargesFixe chargesFixe) {
 		this.chargesFixe = chargesFixe;
+	}
+
+	@Column(name = "nom_Charges", length = 254)
+	public String getNomCharges() {
+		return nomCharges;
+	}
+
+	public void setNomCharges(String nomCharges) {
+		this.nomCharges = nomCharges;
 	}
 
 }

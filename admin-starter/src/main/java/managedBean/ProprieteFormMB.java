@@ -16,6 +16,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 
 import model.Propriete;
+import model.Ville;
 import services.ProprieteHome;
 import services.VilleHome;
 
@@ -38,6 +39,7 @@ public class ProprieteFormMB implements Serializable {
 			idSelectedVille = Propriete.getVille().getIdVille();
 		} else {
 			Propriete = new Propriete();
+			//Propriete.setVille(new Ville());
 		}
 	}
 

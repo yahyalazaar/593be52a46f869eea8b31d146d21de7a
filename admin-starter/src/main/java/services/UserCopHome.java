@@ -161,6 +161,7 @@ public class UserCopHome implements Serializable {
 				.filter(configFilter(filter).stream().reduce(Predicate::or).orElse(t -> true)).count();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<UserCoproprietaire> getAllUserCoproprietaire() {
 
 		List<UserCoproprietaire> results = new ArrayList<UserCoproprietaire>();
@@ -170,9 +171,7 @@ public class UserCopHome implements Serializable {
 		try {
 			tx = session.beginTransaction();
 			results = session.createQuery("from UserCoproprietaire").list();
-
 			tx.commit();
-
 		} catch (Exception e) {
 			if (tx != null) {
 				tx.rollback();
@@ -184,6 +183,7 @@ public class UserCopHome implements Serializable {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<UserCoproprietaire> findByName(String query) {
 		List<UserCoproprietaire> results = new ArrayList<UserCoproprietaire>();
 		SessionFactory factory = HibernateUtil.factory();

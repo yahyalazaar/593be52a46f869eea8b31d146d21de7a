@@ -5,56 +5,54 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:adm="http://github.com/adminfaces"
-	template="#{layoutMB.template}"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	template="#{layoutMB.template}">
 
 	<ui:define name="title">
-        propriete form
+        charges form
     </ui:define>
 
 	<ui:define name="body">
 		<f:metadata>
-			<f:viewParam name="id" value="#{proprieteFormMB.id}"
+			<f:viewParam name="id" value="#{chargesFormMB.id}"
 				converter="javax.faces.Long" />
-			<!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{proprieteFormMB.init()}"/>-->
-			<f:event type="preRenderView" listener="#{proprieteFormMB.init}" />
+			<!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{chargesFormMB.init()}"/>-->
+			<f:event type="preRenderView" listener="#{chargesFormMB.init}" />
 		</f:metadata>
 
 		<adm:breadcrumb
-			title="#{empty proprieteFormMB.id ? 'New propriete' : 'propriete '.concat(proprieteFormMB.id)}"
-			link="propriete-form.xhtml?id=#{proprieteFormMB.id}" />
+			title="#{empty chargesFormMB.id ? 'New charges' : 'charges '.concat(chargesFormMB.id)}"
+			link="charges-form.xhtml?id=#{chargesFormMB.id}" />
 		<h:form id="form" prependId="false">
-			<p:focus rendered="#{empty proprieteFormMB.id}" />
+			<p:focus rendered="#{empty chargesFormMB.id}" />
 
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<div id="main-buttons" class="hidden-sm hidden-xs">
-						<p:commandButton value="Save" action="#{proprieteFormMB.save}"
+						<p:commandButton value="Save" action="#{chargesFormMB.save}"
 							update="@form" icon="fa fa-check" styleClass="btn-primary" />
-						<p:spacer width="5" rendered="#{proprieteFormMB.isNew()}" />
-						<p:commandButton value="Clear" action="#{proprieteFormMB.clear}"
+						<p:spacer width="5" rendered="#{chargesFormMB.isNew()}" />
+						<p:commandButton value="Clear" action="#{chargesFormMB.clear}"
 							process="@this" icon="fa fa-refresh" styleClass="btn-success"
-							update="@form" rendered="#{proprieteFormMB.isNew()}"
+							update="@form" rendered="#{chargesFormMB.isNew()}"
 							resetValues="true" />
-						<p:spacer width="5" rendered="#{not proprieteFormMB.isNew()}" />
+						<p:spacer width="5" rendered="#{not chargesFormMB.isNew()}" />
 
 						<p:spacer width="5" />
 						<p:commandButton value="Back" immediate="true"
-							action="propriete-list?faces-redirect=true" process="@this"
+							action="charges-list?faces-redirect=true" process="@this"
 							icon="fa fa-reply" />
 					</div>
-					<p:splitButton value="Save" action="#{proprieteFormMB.save}"
+					<p:splitButton value="Save" action="#{chargesFormMB.save}"
 						update="@form" icon="fa fa-check"
 						styleClass="hidden-md hidden-lg btn-primary">
-						<p:menuitem value="Reset" action="#{proprieteFormMB.clear}"
+						<p:menuitem value="Reset" action="#{chargesFormMB.clear}"
 							process="@this" update="@form"
-							rendered="#{proprieteFormMB.isNew()}" resetValues="true"
+							rendered="#{chargesFormMB.isNew()}" resetValues="true"
 							icon="fa fa-refresh" />
 
 						<p:separator />
-						<p:menuitem value="Back"
-							action="propriete-list?faces-redirect=true" process="@this"
-							immediate="true" icon="fa fa-reply" />
+						<p:menuitem value="Back" action="charges-list?faces-redirect=true"
+							process="@this" immediate="true" icon="fa fa-reply" />
 					</p:splitButton>
 
 					<p:separator />
@@ -64,32 +62,36 @@
 							<p:outputLabel for="id" value="ID" />
 						</div>
 						<div class="ui-sm-12 ui-md-4 ui-lg-5">
-							<p:inputText id="id"
-								value="#{proprieteFormMB.propriete.idPropriete}" size="4"
-								readonly="true" styleClass="form-control" style="width: 100%" />
+							<p:inputText id="id" value="#{chargesFormMB.charges.idCharges}"
+								size="4" readonly="true" styleClass="form-control"
+								style="width: 100%" />
 						</div>
 						<div class="ui-sm-12 ui-md-2 ui-lg-1">
 							<p:outputLabel value="Nom" for="inptnom" />
 						</div>
 						<div class="ui-sm-12 ui-md-4 ui-lg-5">
 							<p:inputText id="inptnom"
-								value="#{proprieteFormMB.propriete.nomPropriete}" />
+								value="#{chargesFormMB.charges.nomCharges}" />
 						</div>
+
 						<div class="ui-sm-12 ui-md-2 ui-lg-1">
-							<p:outputLabel value="Adresse" for="inptadr" />
+							<p:outputLabel value="Type" for="inpttype" />
 						</div>
 						<div class="ui-sm-12 ui-md-4 ui-lg-5">
-							<p:inputTextarea id="inptadr"
-								value="#{proprieteFormMB.propriete.adressePropriete}"></p:inputTextarea>
+							<p:selectOneMenu id="inpttype"
+								value="#{chargesFormMB.idSelectedCharges}">
+								<f:selectItem itemLabel="Fixe" itemValue="1" />
+								<f:selectItem itemLabel="Temporaire" itemValue="2" />
+							</p:selectOneMenu>
 						</div>
 						<div class="ui-sm-12 ui-md-2 ui-lg-1">
-							<p:outputLabel value="Ville" for="inptvilles" />
+							<p:outputLabel value="Propriete" for="inptprop" />
 						</div>
 						<div class="ui-sm-12 ui-md-4 ui-lg-5">
-							<p:selectOneMenu id="inptvilles"
-								value="#{proprieteFormMB.idSelectedVille}">
-								<f:selectItems value="#{villeHome.all}" var="v"
-									itemValue="#{v.idVille}" itemLabel="#{v.nomVille}" />
+							<p:selectOneMenu id="inptprop" value="#{chargesFormMB.idprop}"
+								disabled="#{chargesFormMB.id!=null}">
+								<f:selectItems value="#{proprieteHome.all}" var="p"
+									itemValue="#{p.idPropriete}" itemLabel="#{p.nomPropriete}" />
 							</p:selectOneMenu>
 						</div>
 					</div>
