@@ -101,7 +101,7 @@
 										oncomplete="PF('chargessTable').filter()" />
 								</p:inputText>
 							</f:facet>
-                          #{c.montantCharge} 
+                          #{c.montantCharge!=null?c.montantCharge:0} 
                         </p:column>
 						<p:column headerText="Type" sortBy="#{c.nomCharges}"
 							filterBy="#{c.nomCharges}">

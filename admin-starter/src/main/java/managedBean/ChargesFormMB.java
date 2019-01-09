@@ -40,8 +40,10 @@ public class ChargesFormMB implements Serializable {
 		}
 		if (has(id)) {
 			Charges = Chargeshome.findById(id);
+			
 			if(new ChargesFixeHome().findById(id)!=null) {
 				idSelectedCharges=1;
+				
 			}else {
 				idSelectedCharges=2;
 			}
@@ -49,7 +51,6 @@ public class ChargesFormMB implements Serializable {
 		} else {
 			Charges = new Charges();
 			idSelectedCharges=1;
-			//Charges.setVille(new Ville());
 		}
 	}
 
