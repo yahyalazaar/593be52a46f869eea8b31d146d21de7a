@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="userCops" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="description">
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<div id="main-buttons" class="hidden-sm hidden-xs">
+						<p:commandButton action="/userCop-form?faces-redirect=true"
+							icon="fa fa-plus" value="New" styleClass="btn-primary" />
+						<p:spacer width="5" />
+
+						<p:spacer width="5" />
+						<p:commandButton value="View selected" update="@(.ui-dialog)"
+							styleClass="btn-info"
+							disabled="#{empty userCopListMB.selectedUserCoproprietaires or userCopListMB.selectedUserCoproprietaires.size() == 0}"
+							oncomplete="PF('selectedUserCoproprietaires').show()"
+							icon="fa fa-search" />
+					</div>
+
+					<p:splitButton value="New"
+						action="/userCop-form?faces-redirect=true" icon="fa fa-plus"
+						styleClass="hidden-md hidden-lg btn-primary">
+
+						<p:menuitem value="View selected" update="@(.ui-dialog)"
+							oncomplete="PF('selectedUserCoproprietaires').show()"
+							disabled="#{empty userCopListMB.selectedUserCoproprietaires or userCopListMB.selectedUserCoproprietaires.size() == 0}"
+							icon="fa fa-search" />
+					</p:splitButton>
+
+					<p:separator />
+					<p:dataTable widgetVar="userCopsTable" var="c"
+						value="#{userCopListMB.userCoproprietaires}" rows="5"
+						rowKey="#{c.user.idUser}" lazy="true" paginator="true"
+						filteredValue="#{userCopListMB.filteredValue}"
+						paginatorPosition="bottom"
+						selection="#{userCopListMB.selectedUserCoproprietaires}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+						currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
+						rowsPerPageTemplate="5,10,15,20,30">
+
+						<p:ajax event="rowSelectCheckbox"
+							update="@(.ui-button, .ui-confirm-dialog)" />
+						<p:ajax event="rowUnselectCheckbox"
+							update="@(.ui-button, .ui-confirm-dialog)" />
+						<p:ajax event="rowSelect"
+							update="@(.ui-button, .ui-confirm-dialog)" />
+						<p:ajax event="rowUnselect"
+							update="@(.ui-button, .ui-confirm-dialog)" />
+
+
+						<f:facet name="header">
+                            Find userCop by id: <p:inputNumber
+								id="inptId" decimalPlaces="0"
+								value="#{userCopListMB.idUserCoproprietaire}" />
+							<p:spacer height="5" />
+							<p:commandButton id="brFind" value="Find"
+								action="#{userCopListMB.findUserCoproprietaireById(userCopListMB.idUserCoproprietaire)}"
+								process="@form" update="@form"
+								styleClass="btn-flat bg-black btn-states" partialSubmit="true" />
+						</f:facet>
+						<p:column selectionMode="multiple" width="5%"
+							styleClass="align-center" />
+
+						<p:column headerText="Nom" filterBy="#{c.user.nomUser}"
+							sortBy="#{c.user.nomUser}" filterMatchMode="contains">
+							<p:link value="#{c.user.nomUser}" outcome="/userCop-form.xhtml"
+								disabled="#{c.user.typeUser.equals('admin')}">
+								<f:param name="id" value="#{c.user.idUser}" />
+							</p:link>
+
+						</p:column>
+						<p:column headerText="Prenom" sortBy="#{c.user.prenomUser}"
+							filterBy="#{c.user.prenomUser}">
+                           #{c.user.prenomUser}
+                        </p:column>
+						<p:column headerText="Email" sortBy="#{c.user.loginUser}"
+							filterBy="#{c.user.loginUser}">
+                           #{c.user.loginUser}
+                        </p:column>
+						<p:column headerText="Type" sortBy="#{c.user.typeUser}"
+							filterBy="#{c.user.typeUser}">
+                          #{c.user.typeUser}
+                        </p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-danger box-solid">
+				<p:commandButton value="Yes" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+
+		<p:dialog header="Selected userCops"
+			widgetVar="selectedUserCoproprietaires" height="250" width="400"
+			responsive="true" styleClass="box-success">
+			<p:dataList id="selectedUserCoproprietairesList"
+				value="#{userCopListMB.selectedUserCoproprietaires}" var="userCop"
+				type="definition">
+                ID: #{userCopropriete.user.idUser} - Name: #{userCopropriete.user.nomUser}
+            </p:dataList>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

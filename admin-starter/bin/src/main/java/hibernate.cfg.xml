@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="sessionFactory">
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password"></property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306</property>
+<!-- 		<property name="hibernate.default_schema">copropriete</property> -->
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+<!-- 		<property name="hibernate.hbm2ddl.auto">update</property> -->
+		<property
+			name="hibernate.hbm2ddl.jdbc_metadata_extraction_strategy">individually</property>
+		<!-- <property name="hibernate.hbm2ddl.import_files">copropriete.sql</property> -->
+		<property name="hibernate.current_session_context_class">thread</property>
+		<!-- multi-tenancy configuration -->
+		<property name="hibernate.multiTenancy">SCHEMA</property>
+		<property name="hibernate.multi_tenant_connection_provider">HibernateUtil.MultiTenantConnectionProviderImpl</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+
+
+		<mapping class="model.Assemble" />
+		<mapping class="model.BienCommun" />
+		<mapping class="model.Charges" />
+		<mapping class="model.ChargesFixe" />
+		<mapping class="model.ChargesTemporaire" />
+		<mapping class="model.Cotisation" />
+		<mapping class="model.CotisationAnnuel" />
+		<mapping class="model.CotisationMensuel" />
+		<mapping class="model.Fournisseurs" />
+		<mapping class="model.FrsEntreprise" />
+		<mapping class="model.FrsParticulier" />
+		<mapping class="model.Location" />
+		<mapping class="model.LocationBien" />
+		<mapping class="model.Notification" />
+		<mapping class="model.NotificationUser" />
+		<mapping class="model.Propriete" />
+		<mapping class="model.ProprieteFrs" />
+		<mapping class="model.Rapport" />
+		<mapping class="model.SyndicPropriete" />
+		<mapping class="model.User" />
+		<mapping class="model.UserAdmin" />
+		<mapping class="model.UserCoproprietaire" />
+		<mapping class="model.UserSyndic" />
+		<mapping class="model.Ville" />
+		<mapping class="model.VoteCopropProp" />
+	</session-factory>
+</hibernate-configuration>

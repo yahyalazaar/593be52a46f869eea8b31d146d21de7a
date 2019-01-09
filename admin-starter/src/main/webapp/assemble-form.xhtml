@@ -8,7 +8,7 @@
 	template="#{layoutMB.template}">
 
 	<ui:define name="title">
-        assemble form
+        Formulaire d'assemblé
     </ui:define>
 
 	<ui:define name="body">
@@ -63,9 +63,9 @@
 							<p:outputLabel for="id" value="ID" />
 						</div>
 						<div class="ui-sm-12 ui-md-4 ui-lg-5">
-							<p:inputText id="id" value="#{assembleFormMB.assemble.idAssemble}"
-								size="4" readonly="true" styleClass="form-control"
-								style="width: 100%" />
+							<p:inputText id="id"
+								value="#{assembleFormMB.assemble.idAssemble}" size="4"
+								readonly="true" styleClass="form-control" style="width: 100%" />
 						</div>
 						<div class="ui-sm-12 ui-md-2 ui-lg-1">
 							<p:outputLabel value="Duree" for="inptnom" />
@@ -74,13 +74,14 @@
 							<p:inputNumber id="inptnom"
 								value="#{assembleFormMB.assemble.dureeAssemble}" />
 						</div>
-						
+
 						<div class="ui-sm-12 ui-md-2 ui-lg-1">
 							<p:outputLabel value="Date" for="inpdd" />
 						</div>
 						<div class="ui-sm-12 ui-md-4 ui-lg-5">
 							<p:calendar id="inpdd" showOn="button"
-								value="#{assembleFormMB.assemble.dateAssemble}" pattern="MM/dd/yyyy HH:mm:ss"/>
+								value="#{assembleFormMB.assemble.dateAssemble}"
+								pattern="MM/dd/yyyy HH:mm:ss" />
 						</div>
 					</div>
 				</div>

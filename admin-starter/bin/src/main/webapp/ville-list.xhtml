@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+    
+    <ui:define name="metadata">
+        <ui:param name="title" value="Villes"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+
+        </style>
+    </ui:define>
+    
+    <ui:define name="description">
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton action="/ville-form?faces-redirect=true" icon="fa fa-plus"
+                                         value="New" styleClass="btn-primary"/>
+                        <p:spacer width="5"/>
+                        
+                        <p:spacer width="5"/>
+                        <p:commandButton value="View selected" update="@(.ui-dialog)" styleClass="btn-info"
+                                         disabled="#{empty villeListMB.selectedvilles or villeListMB.selectedvilles.size() == 0}"
+                                         oncomplete="PF('selectedvilles').show()" icon="fa fa-search"/>
+                    </div>
+
+                    <p:splitButton value="New" action="/ville-form?faces-redirect=true"
+                                   icon="fa fa-plus"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                       
+                        <p:menuitem value="View selected" update="@(.ui-dialog)"
+                                    oncomplete="PF('selectedvilles').show()"
+                                    disabled="#{empty villeListMB.selectedvilles or villeListMB.selectedvilles.size() == 0}"
+                                    icon="fa fa-search"
+                                    />
+                    </p:splitButton>
+
+                    <p:separator/>
+                    <p:dataTable widgetVar="villesTable" var="c" value="#{villeListMB.villes}" rows="5"
+                                 rowKey="#{c.idVille}" lazy="true" paginator="true"
+                                 filteredValue="#{villeListMB.filteredValue}"
+                                 paginatorPosition="bottom" selection="#{villeListMB.selectedvilles}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                                 currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
+                                 rowsPerPageTemplate="5,10,15,20,30"
+                                 >
+
+                        <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselect" update="@(.ui-button, .ui-confirm-dialog)"/>
+
+
+                        <f:facet name="header">
+                            Find ville by id: <p:inputNumber id="inptId" decimalPlaces="0" value="#{villeListMB.idVille}"/>
+                            <p:spacer height="5"/>
+                            <p:commandButton id="brFind"
+                                             value="Find"
+                                             action="#{villeListMB.findVilleById(villeListMB.idVille)}"
+                                             process="@form"
+                                             update="@form"
+                                             styleClass="btn-flat bg-black btn-states"
+                                             partialSubmit="true"/>
+                        </f:facet>
+                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
+
+                        <p:column headerText="Name" filterBy="#{c.nomVille}" sortBy="#{c.nomVille}"
+                                  filterMatchMode="contains">
+                            <f:facet name="filter">
+                                <p:autoComplete value="#{villeListMB.filter.entity.nomVille}" forceSelection="true"
+                                                minQueryLength="1" queryDelay="500"
+                                                completeMethod="#{villeListMB.completeModel}"
+                                                 maxResults="10">
+                                    <p:ajax event="itemSelect" process="@this" update="@none"
+                                            oncomplete="PF('villesTable').filter()"/>
+                                </p:autoComplete>
+                            </f:facet>
+                            <p:link value="#{c.nomVille}" outcome="/ville-form.xhtml" >
+                                <f:param name="id" value="#{c.idVille}"/>
+                            </p:link>
+
+                        </p:column>
+                       
+                    </p:dataTable>
+                </div>
+            </div>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+
+        <p:dialog header="Selected villes" widgetVar="selectedvilles" height="250"
+                  width="400" responsive="true" styleClass="box-success">
+            <p:dataList id="selectedvillesList" value="#{villeListMB.selectedvilles}" var="ville"
+                        type="definition">
+                ID: #{ville.idVille} - Name: #{ville.nomVille}
+            </p:dataList>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
