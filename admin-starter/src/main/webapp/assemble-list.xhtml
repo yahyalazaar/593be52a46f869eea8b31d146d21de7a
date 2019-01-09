@@ -73,7 +73,7 @@
                         </f:facet>
                         <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
 
-                        <p:column headerText="ID" filterBy="#{c.idAssemble}" sortBy="#{c.idAssemble}"
+                        <p:column headerText="Assemble" filterBy="#{c.idAssemble}" sortBy="#{c.idAssemble}"
                                   filterMatchMode="contains">
                             <f:facet name="filter">
                                 <p:autoComplete value="#{assembleListMB.filter.entity.idAssemble}" forceSelection="true"
@@ -84,16 +84,16 @@
                                             oncomplete="PF('assemblesTable').filter()"/>
                                 </p:autoComplete>
                             </f:facet>
-                            <p:link value="#{c.idAssemble}" outcome="/assemble-form.xhtml" >
+                            <p:link value="Assemble #{c.idAssemble}" outcome="/assemble-form.xhtml" >
                                 <f:param name="id" value="#{c.idAssemble}"/>
                             </p:link>
-
+						
                         </p:column>
                        <p:column headerText="Date" sortBy="#{c.dateAssemble}"
 							filterBy="#{c.dateAssemble}">
                            #{c.dateAssemble}
                         </p:column>
-						<p:column headerText="Duree" sortBy="#{c.dureeAssemble}"
+						<p:column headerText="Duree (min)" sortBy="#{c.dureeAssemble}"
 							filterBy="#{c.dureeAssemble}">
                           #{c.dureeAssemble}
                         </p:column>

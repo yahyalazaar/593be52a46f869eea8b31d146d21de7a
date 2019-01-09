@@ -93,7 +93,16 @@
 							</p:link>
 
 						</p:column>
-						
+						<p:column headerText="Montant" sortBy="#{c.montantCharge}"
+							filterBy="#{c.montantCharge}">
+							<f:facet name="filter">
+								<p:inputText value="#{chargesListMB.filter.entity.montantCharge}">
+									<p:ajax process="@this" update="@none"
+										oncomplete="PF('chargessTable').filter()" />
+								</p:inputText>
+							</f:facet>
+                          #{c.montantCharge} 
+                        </p:column>
 						<p:column headerText="Type" sortBy="#{c.nomCharges}"
 							filterBy="#{c.nomCharges}">
 							<f:facet name="filter">
