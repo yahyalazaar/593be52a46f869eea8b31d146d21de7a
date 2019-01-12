@@ -24,6 +24,7 @@ import infra.model.SortOrder;
 import model.Assemble;
 import model.SyndicPropriete;
 import model.User;
+import model.VoteCopropProp;
 
 @Named
 @ViewScoped
@@ -155,8 +156,6 @@ public class AssembleHome implements Serializable {
 
 	}
 
-
-
 	public Assemble findById(Integer id) {
 		SessionFactory factory = HibernateUtil.factory();
 		Session session = factory.withOptions().tenantIdentifier("copropriete").openSession();
@@ -193,7 +192,7 @@ public class AssembleHome implements Serializable {
 		try {
 			tx = session.beginTransaction();
 			results = session.createQuery("from Assemble").list();
-			for(Assemble a : results) {
+			for (Assemble a : results) {
 				Hibernate.initialize(a.getPropriete());
 			}
 
@@ -209,7 +208,6 @@ public class AssembleHome implements Serializable {
 		}
 		return results;
 	}
-
 
 	public static List<Assemble> findByName(String query) {
 		List<Assemble> results = new ArrayList<Assemble>();
@@ -233,13 +231,14 @@ public class AssembleHome implements Serializable {
 		return results;
 	}
 
+	
+
 	public void insert(Assemble Assemble) {
-		//beforeInsert(Assemble);
+		// beforeInsert(Assemble);
 		attachDirtyAssemble(Assemble);
 		allAssembles.add(Assemble);
 	}
 
-	
 
 	public void update(Assemble Assemble) {
 
